@@ -20,7 +20,7 @@ import com.sun.xml.bind.v2.model.core.ID;
 public class Edge {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private ID key;	
+	private Long key;	
 	@OneToOne	
 	private Vertex source;
 	@OneToOne	
@@ -28,18 +28,22 @@ public class Edge {
 	@Column(name = "distance")
 	private Integer distance;
 
+	public Edge() {
+		
+	}
+
 	public Edge(Vertex source, Vertex target, Integer distance) {
-		super();
+		
 		this.source = source;
 		this.target = target;
 		this.distance = distance;
 	}
 
-	public ID getKey() {
+	public Long getKey() {
 		return key;
 	}
 
-	public void setKey(ID key) {
+	public void setKey(Long key) {
 		this.key = key;
 	}
 

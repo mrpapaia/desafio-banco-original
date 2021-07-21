@@ -20,11 +20,11 @@ import com.sun.xml.bind.v2.model.core.ID;
 public class Graph {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private ID key;
-	 @OneToMany
+	private Long key;
+	 @OneToMany(cascade=CascadeType.PERSIST)
 	    @JoinColumn(nullable = true)
 	private List<Vertex> listVertex;
-	 @OneToMany
+	 @OneToMany(cascade=CascadeType.PERSIST)
 	    @JoinColumn(nullable = true)
 	private List<Edge> listEdge;
 
@@ -33,11 +33,11 @@ public class Graph {
 		this.listEdge = new ArrayList<Edge>();
 	}
 
-	public ID getKey() {
+	public Long getKey() {
 		return key;
 	}
 
-	public void setKey(ID key) {
+	public void setKey(Long key) {
 		this.key = key;
 	}
 
@@ -57,37 +57,6 @@ public class Graph {
 		this.listEdge = listEdge;
 	}
 
-	public void addVertex(Vertex newVertex) {
-		if(getVertexByName(newVertex)==null)
-		listVertex.add(newVertex);
-
-	}
-
-	public void addEdge(Integer distance, Vertex source, Vertex target) {
-		Vertex sourceInList = getVertexByName(source);
-		Vertex targetInList = getVertexByName(target);
-		Edge newEdged = new Edge(sourceInList, targetInList, distance);
-		sourceInList.addOutputEdge(newEdged);
-		targetInList.addInputEdge(newEdged);
-		listEdge.add(newEdged);
-
-	}
-
-	public Vertex getVertex(Vertex newVertex) {
-		for (int i = 0; i < listVertex.size(); i++) {
-			if (listVertex.get(i).equals(newVertex)) {
-				return listVertex.get(i);
-			}
-		}
-		return null;
-	}
-	public Vertex getVertexByName(Vertex newVertex) {
-		for (int i = 0; i < listVertex.size(); i++) {
-			if (listVertex.get(i).getName().equals(newVertex.getName())) {
-				return listVertex.get(i);
-			}
-		}
-		return null;
-	}
+	
 
 }

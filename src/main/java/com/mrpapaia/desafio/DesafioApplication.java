@@ -19,8 +19,7 @@ import com.mrpapaia.desafio.model.Vertex;
 public class DesafioApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DesafioApplication.class, args);
-	
+		SpringApplication.run(DesafioApplication.class, args);	
 	}
 	
 	

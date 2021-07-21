@@ -24,16 +24,20 @@ import com.sun.xml.bind.v2.model.core.ID;
 public class Vertex {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)	
-	private ID key;
+	private Long key;
 	@Column(name = "name")
 	private String name;
 	
-	@OneToMany
+	@OneToMany(cascade=CascadeType.PERSIST)
     @Nullable
 	private List<Edge> listInputEdge;
-	@OneToMany
+	@OneToMany(cascade=CascadeType.PERSIST)
     @Nullable
 	private List<Edge> listOutputEdge;
+
+	public Vertex() {
+		
+	}
 
 	public Vertex(String name) {
 		this.name = name;
@@ -41,11 +45,11 @@ public class Vertex {
 		this.listOutputEdge = new ArrayList<Edge>();
 	}
 
-	public ID getKey() {
+	public Long getKey() {
 		return key;
 	}
 
-	public void setKey(ID key) {
+	public void setKey(Long key) {
 		this.key = key;
 	}
 

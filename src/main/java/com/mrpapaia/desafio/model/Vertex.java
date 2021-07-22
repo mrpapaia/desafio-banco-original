@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.xml.bind.v2.model.core.ID;
 @Entity
 @Table(name="tb_vertex")
-public class Vertex {
+public class Vertex implements Cloneable {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)	
 	private Long key;
@@ -87,7 +87,7 @@ public class Vertex {
 
 	@Override
 	public String toString() {
-		return "Vertex [name=" + name + ", listInputEdge=" + listInputEdge + ", listOutputEdge=" + listOutputEdge + "]";
+		return  name + "";
 	}
 	
 	

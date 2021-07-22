@@ -28,6 +28,10 @@ public class GraphDTO {
 	public void setData(List<EdgeDTO> data) {
 		this.data = data;
 	}
+	@Override
+	public String toString() {
+		return "GraphDTO [id=" + id + ", data=" + data + "]";
+	}
 	
 	
 	

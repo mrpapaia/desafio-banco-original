@@ -16,6 +16,7 @@ import com.mrpapaia.desafio.dto.GraphDTO;
 import com.mrpapaia.desafio.model.Edge;
 import com.mrpapaia.desafio.model.Graph;
 import com.mrpapaia.desafio.service.GraphService;
+import com.mrpapaia.desafio.controller.util.ToDTO;
 
 @RestController
 @RequestMapping("/graph")
@@ -29,28 +30,19 @@ public class GraphController {
 		return new ResponseEntity<GraphDTO>(graphDTO, HttpStatus.CREATED);
 	}
 
-	@GetMapping(value = "/{id}")
-	public ResponseEntity<GraphDTO> getGraphById(@PathVariable Long id) {
+	@GetMapping(value = "/{graphId}")
+	public ResponseEntity<GraphDTO> getGraphById(@PathVariable Long graphId) {
 		Graph graph = null;
 		try {
-			graph = graphService.findGraphById(id);
+			graph = graphService.findGraphById(graphId);
 
 		} catch (ResourceNotFoundException e) {
 			return ResponseEntity.notFound().build();
 		}
 
-		return ResponseEntity.ok(toDTO(graph));
+		return ResponseEntity.ok(ToDTO.graphToDTO(graph));
 
 	}
 
-	private GraphDTO toDTO(Graph graph) {
-		GraphDTO newDTO = new GraphDTO();
-
-		newDTO.setId(graph.getKey());
-		for (Edge edge : graph.getListEdge()) {
-			newDTO.getData()
-					.add(new EdgeDTO(edge.getSource().getName(), edge.getTarget().getName(), edge.getDistance()));
-		}
-		return newDTO;
-	}
+	
 }

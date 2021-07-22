@@ -31,6 +31,10 @@ public class EdgeDTO {
 	public void setDistance(Integer distance) {
 		this.distance = distance;
 	}
+	@Override
+	public String toString() {
+		return "EdgeDTO [source=" + source + ", target=" + target + ", distance=" + distance + "]";
+	}
 	
 	
 

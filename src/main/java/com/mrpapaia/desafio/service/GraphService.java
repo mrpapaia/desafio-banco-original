@@ -34,7 +34,7 @@ public class GraphService {
 
 	
 	public Graph findGraphById(Long id) {
-		Graph graph=graphRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Pessoa Fisica não encontradao"));
+		Graph graph=graphRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("não encontrado"));
 		return graph;
 	}	
 }

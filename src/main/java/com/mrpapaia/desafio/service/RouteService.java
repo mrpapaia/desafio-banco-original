@@ -3,11 +3,12 @@ package com.mrpapaia.desafio.service;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Stack;
 
 import org.springframework.stereotype.Service;
 
 import com.mrpapaia.desafio.dto.GraphDTO;
-import com.mrpapaia.desafio.dto.RouteDTO;
+import com.mrpapaia.desafio.dto.RoutesDTO;
 import com.mrpapaia.desafio.model.Edge;
 import com.mrpapaia.desafio.model.Graph;
 import com.mrpapaia.desafio.model.Vertex;
@@ -16,52 +17,56 @@ import com.mrpapaia.desafio.service.util.GraphUtil;
 @Service
 public class RouteService {
 
-	public String getRoutes(GraphDTO graphDTO, String town1, String town2, Integer maxStops) {
-
+	public List<Stack<Vertex>> getAllRoutesBetweenToVertexInNewGraph(GraphDTO graphDTO, String town1, String town2,
+			Integer maxStops) {
 		Graph graph = new Graph();
 		GraphUtil.setListVertex(graph, graphDTO.getData());
 		GraphUtil.setListEdge(graph, graphDTO.getData());
-		return teste(GraphUtil.getVertexByName(graph, town1), GraphUtil.getVertexByName(graph, town2));
+		return getAllRoutesBetweenToVertex(GraphUtil.getVertexByName(graph, town1),
+				GraphUtil.getVertexByName(graph, town2), maxStops);
 
 	}
+	public List<Stack<Vertex>> getAllRoutesBetweenToVertexInExistedGraph(Graph graph, String town1, String town2,
+			Integer maxStops) {	
+		return getAllRoutesBetweenToVertex(GraphUtil.getVertexByName(graph, town1),
+				GraphUtil.getVertexByName(graph, town2), maxStops);
 
-	public String teste(Vertex begin, Vertex end) {
-		List<Vertex> listVertex = bfs(begin);
-
-		LinkedList<Vertex> visited = new LinkedList<Vertex>();
-		List<LinkedList<Vertex>> paths = new LinkedList<>();
+	}
+	public List<Stack<Vertex>> getAllRoutesBetweenToVertex(Vertex begin, Vertex end, Integer maxStops) {
+		Stack<Vertex> visited = new Stack<Vertex>();
+		List<Stack<Vertex>> paths = new ArrayList<Stack<Vertex>>();
 		visited.add(begin);
-		depthFirst(visited, end, paths);
-		System.out.println(paths);
-		return null;
+		dfs(visited, end, paths);
+		if (maxStops != null)
+			paths.removeIf(p -> p.size() > maxStops + 1);		
+		return paths;
 
 	}
 
-	private void depthFirst(LinkedList<Vertex> visited, Vertex end, List<LinkedList<Vertex>> paths) {
-		List<Vertex> nodes = adjacentVertex(visited.getLast());
+	private void dfs(Stack<Vertex> visited, Vertex end, List<Stack<Vertex>> paths) {
+		List<Vertex> vertexList = adjacentVertex(visited.get(visited.size() - 1));
 
-		for (Vertex node : nodes) {
+		for (Vertex vertex : vertexList) {
 
-			if (visited.contains(node)) {
+			if (visited.contains(vertex)) {
 				continue;
 			}
 
-			if (node.equals(end)) {
-				visited.add(node);
-				paths.add((LinkedList<Vertex>) visited.clone());
-				visited.removeLast();
+			if (vertex.equals(end)) {
+				visited.add(vertex);
+				paths.add((Stack<Vertex>) visited.clone());
+				visited.pop();
 				break;
 			}
 		}
-		for (Vertex node : nodes) {
-			if (visited.contains(node) || node.equals(end)) {
+		for (Vertex vertex : vertexList) {
+			if (visited.contains(vertex) || vertex.equals(end)) {
 				continue;
 			}
 
-			visited.addLast(node);
-			;
-			depthFirst(visited, end, paths);
-			visited.removeLast();
+			visited.push(vertex);
+			dfs(visited, end, paths);
+			visited.pop();
 		}
 	}
 

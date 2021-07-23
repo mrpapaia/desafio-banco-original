@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Stack;
 
 import com.mrpapaia.desafio.dto.EdgeDTO;
+import com.mrpapaia.desafio.dto.GraphDTO;
 import com.mrpapaia.desafio.model.Edge;
 import com.mrpapaia.desafio.model.Graph;
 import com.mrpapaia.desafio.model.Vertex;
@@ -23,7 +24,6 @@ public class GraphUtil {
 				graph.getListVertex().add(newVertex);
 			}
 		}
-
 	}
 
 	public static Boolean vertexExist(Graph graph, Vertex newVertex) {
@@ -42,9 +42,7 @@ public class GraphUtil {
 		for (EdgeDTO edgeDto : edgeDTOList) {
 			source = getVertexByName(graph, edgeDto.getSource());
 			target = getVertexByName(graph, edgeDto.getTarget());
-
 			if (source != null && target != null) {
-
 				newEdge = new Edge(source, target, edgeDto.getDistance());
 				if (!edgeExist(graph, newEdge)) {
 					source.addOutputEdge(newEdge);
@@ -78,13 +76,10 @@ public class GraphUtil {
 	@SuppressWarnings("unchecked")
 	public static void dfs(Stack<Vertex> visited, Vertex end, List<Stack<Vertex>> paths) {
 		List<Vertex> vertexList = adjacentVertex(visited.get(visited.size() - 1));
-
 		for (Vertex vertex : vertexList) {
-
 			if (visited.contains(vertex)) {
 				continue;
 			}
-
 			if (vertex.equals(end)) {
 				visited.add(vertex);
 				paths.add((Stack<Vertex>) visited.clone());
@@ -105,14 +100,12 @@ public class GraphUtil {
 	public static List<Vertex> adjacentVertex(Vertex vertex) {
 		List<Vertex> adjacentVertex = new LinkedList<Vertex>();
 		for (Edge edge : vertex.getListOutputEdge()) {
-
 			adjacentVertex.add(edge.getTarget());
 		}
 		return adjacentVertex;
 	}
 
 	public static List<Vertex> bfs(Vertex start) {
-
 		List<Vertex> listVertex = new ArrayList<Vertex>();
 		List<Vertex> visited = new ArrayList<Vertex>();
 		List<Vertex> queue = new ArrayList<Vertex>();
@@ -127,48 +120,38 @@ public class GraphUtil {
 					queue.add(next);
 				}
 			}
-
 			queue.remove(0);
 		}
 		return listVertex;
-
 	}
 
 	public static List<Stack<Vertex>> getAllRoutesBetweenTwoVertex(Vertex start, Vertex stop, Integer maxStops) {
 		Stack<Vertex> visited = new Stack<Vertex>();
 		List<Stack<Vertex>> paths = new ArrayList<Stack<Vertex>>();
-
 		visited.add(start);
 		GraphUtil.dfs(visited, stop, paths);
 		if (maxStops != null)
 			paths.removeIf(p -> p.size() > maxStops + 1);
 
 		return paths;
-
 	}
 
 	public static Integer getDistance(List<Vertex> path) {
-
 		Integer distance = 0;
-
 		for (int i = 0; i < path.size() - 1; i++) {
 			Vertex v1 = path.get(i);
 			Vertex v2 = path.get(i + 1);
 			for (Edge edge : v1.getListOutputEdge()) {
 				if (edge.getTarget().equals(v2)) {
 					distance += edge.getDistance();
-
 					break;
 				}
 			}
-
 		}
-
 		return distance;
 	}
 
 	public static List<Vertex> getMinimalRouteBetweenTwoVertex(Vertex start, Vertex stop) {
-
 		List<Stack<Vertex>> listPaths = getAllRoutesBetweenTwoVertex(start, stop, null);
 		List<Vertex> minPath = listPaths.get(0);
 		Integer minPathSize = getDistance(listPaths.get(0));
@@ -181,5 +164,12 @@ public class GraphUtil {
 			}
 		}
 		return minPath;
+	}
+
+	public static Graph initGraph(GraphDTO graphDTO) {
+		Graph graph = new Graph();
+		setListVertex(graph, graphDTO.getData());
+		setListEdge(graph, graphDTO.getData());
+		return graph;
 	}
 }

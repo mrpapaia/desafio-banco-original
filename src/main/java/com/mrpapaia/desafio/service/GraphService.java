@@ -22,17 +22,21 @@ public class GraphService {
 	public GraphService() {		
 	}
 	
-	public Long addGraph(GraphDTO graphDTO) {
-		 Graph graph=new Graph();
-		 GraphUtil.setListVertex(graph,graphDTO.getData());
-		 GraphUtil.setListEdge(graph,graphDTO.getData());
-		graphRepository.save(graph);
-		return graph.getKey();
+	
+
+	public GraphService(GraphRepository graphRepository) {		
+		this.graphRepository = graphRepository;
+	}
+
+	public GraphDTO addGraph(GraphDTO graphDTO) {
+		Graph graph = GraphUtil.initGraph(graphDTO);
+		GraphDTO responseGraph=ToDTO.graphToDTO(graphRepository.save(graph)) ;
+		return responseGraph;
 	}
 
 	
 	public GraphDTO findGraphById(Long id) {
-		Graph graph=graphRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("não encontrado"));
+		Graph graph=graphRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Not Found"));
 		return ToDTO.graphToDTO(graph);
 	}	
 }

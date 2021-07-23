@@ -23,6 +23,10 @@ public class RouteDTO {
 	public void setStops(Integer stops) {
 		this.stops = stops;
 	}
+	@Override
+	public String toString() {
+		return "RouteDTO [route=" + route + ", stops=" + stops + "]";
+	}
 	
 	
 

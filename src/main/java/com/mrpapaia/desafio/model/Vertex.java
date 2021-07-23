@@ -87,6 +87,49 @@ public class Vertex implements Cloneable {
 	public String toString() {
 		return  name + "";
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((key == null) ? 0 : key.hashCode());
+		result = prime * result + ((listInputEdge == null) ? 0 : listInputEdge.hashCode());
+		result = prime * result + ((listOutputEdge == null) ? 0 : listOutputEdge.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Vertex other = (Vertex) obj;
+		if (key == null) {
+			if (other.key != null)
+				return false;
+		} else if (!key.equals(other.key))
+			return false;
+		if (listInputEdge == null) {
+			if (other.listInputEdge != null)
+				return false;
+		} else if (!listInputEdge.equals(other.listInputEdge))
+			return false;
+		if (listOutputEdge == null) {
+			if (other.listOutputEdge != null)
+				return false;
+		} else if (!listOutputEdge.equals(other.listOutputEdge))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
+	}
 	
 	
 

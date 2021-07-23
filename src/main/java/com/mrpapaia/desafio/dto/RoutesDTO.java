@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RoutesDTO {
+		@Override
+	public String toString() {
+		return "RoutesDTO [routes=" + routes + "]";
+	}
 		private List<RouteDTO> routes;
 
 		public RoutesDTO( ){

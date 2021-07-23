@@ -1,20 +1,18 @@
 package com.mrpapaia.desafio.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mrpapaia.desafio.controller.exception.ResourceNotFoundException;
-import com.mrpapaia.desafio.dto.EdgeDTO;
 import com.mrpapaia.desafio.dto.GraphDTO;
-import com.mrpapaia.desafio.model.Edge;
+
 import com.mrpapaia.desafio.model.Graph;
-import com.mrpapaia.desafio.model.Vertex;
+
 import com.mrpapaia.desafio.repository.GraphRepository;
 import com.mrpapaia.desafio.service.util.GraphUtil;
+import com.mrpapaia.desafio.service.util.ToDTO;
 @Service
 public class GraphService {
 	@Autowired
@@ -33,8 +31,8 @@ public class GraphService {
 	}
 
 	
-	public Graph findGraphById(Long id) {
+	public GraphDTO findGraphById(Long id) {
 		Graph graph=graphRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("não encontrado"));
-		return graph;
+		return ToDTO.graphToDTO(graph);
 	}	
 }

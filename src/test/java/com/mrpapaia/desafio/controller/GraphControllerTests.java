@@ -44,7 +44,7 @@ import com.mrpapaia.desafio.service.util.GraphUtil;
 import com.mrpapaia.desafio.service.util.ToDTO;
 
 @WebMvcTest(controllers = GraphController.class)
-public class GraphControllerTest {
+public class GraphControllerTests {
 	@MockBean
 	private GraphRepository graphRepository;
 	@MockBean

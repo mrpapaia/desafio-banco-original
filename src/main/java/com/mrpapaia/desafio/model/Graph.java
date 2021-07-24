@@ -13,18 +13,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
 @Entity
-@Table(name="tb_graph")
+@Table(name = "tb_graph")
 public class Graph {
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long key;
-	 @OneToMany(cascade=CascadeType.PERSIST)
-	    @JoinColumn(nullable = true)
+	@OneToMany(cascade = CascadeType.PERSIST)
+	@JoinColumn(nullable = true)
 	private List<Vertex> listVertex;
-	 @OneToMany(cascade=CascadeType.PERSIST)
-	    @JoinColumn(nullable = true)
+	@OneToMany(cascade = CascadeType.PERSIST)
+	@JoinColumn(nullable = true)
 	private List<Edge> listEdge;
 
 	public Graph() {
@@ -92,7 +91,5 @@ public class Graph {
 			return false;
 		return true;
 	}
-
-	
 
 }

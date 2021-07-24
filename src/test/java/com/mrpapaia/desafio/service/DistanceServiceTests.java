@@ -1,7 +1,8 @@
 package com.mrpapaia.desafio.service;
 
-import static org.junit.jupiter.api.Assertions.*;
 
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -19,7 +20,7 @@ import com.mrpapaia.desafio.dto.GraphDTO;
 import com.mrpapaia.desafio.dto.PathDTO;
 
 @SpringBootTest
-class DistanceServiceTest {
+class DistanceServiceTests {
 	@Autowired
 	private DistanceService distanceService;
 	private GraphDTO graphDTO;
@@ -36,7 +37,7 @@ class DistanceServiceTest {
 	void getDistanceForPathAD() {
 		graphDTO.setPath(Arrays.asList("A", "D"));
 		PathDTO pathDTOResponse = distanceService.getDistanceForPath(graphDTO);
-		assertEquals(5, pathDTOResponse.getDistance());
+		assertEquals(5, pathDTOResponse.getDistance().intValue());
 	}
 
 	@Test
@@ -44,7 +45,7 @@ class DistanceServiceTest {
 	void getDistanceForPathADC() {
 		graphDTO.setPath(Arrays.asList("A", "D", "C"));
 		PathDTO pathDTOResponse = distanceService.getDistanceForPath(graphDTO);
-		assertEquals(13, pathDTOResponse.getDistance());
+		assertEquals(13, pathDTOResponse.getDistance().intValue());
 	}
 
 	@Test
@@ -52,7 +53,7 @@ class DistanceServiceTest {
 	void getDistanceForPathAEBCD() {
 		graphDTO.setPath(Arrays.asList("A", "E", "B", "C", "D"));
 		PathDTO pathDTOResponse = distanceService.getDistanceForPath(graphDTO);
-		assertEquals(22, pathDTOResponse.getDistance());
+		assertEquals(22, pathDTOResponse.getDistance().intValue());
 	}
 
 	@Test
@@ -60,7 +61,7 @@ class DistanceServiceTest {
 	void getDistanceForPathAED() {
 		graphDTO.setPath(Arrays.asList("A", "E", "D"));
 		PathDTO pathDTOResponse = distanceService.getDistanceForPath(graphDTO);
-		assertEquals(-1, pathDTOResponse.getDistance());
+		assertEquals(-1, pathDTOResponse.getDistance().intValue());
 	}
 
 	@Test
@@ -68,21 +69,21 @@ class DistanceServiceTest {
 	void getDistanceForPathABC() {
 		graphDTO.setPath(Arrays.asList("A", "B", "C"));
 		PathDTO pathDTOResponse = distanceService.getDistanceForPath(graphDTO);
-		assertEquals(9, pathDTOResponse.getDistance());
+		assertEquals(9, pathDTOResponse.getDistance().intValue());
 	}
 
 	@Test
 	@DisplayName(value = "Test method getMinimalPath where path A to C")
 	void getMinimalPathAtoC() {		
 		PathDTO pathDTOResponse = distanceService.getMinimalPath(graphDTO, "A", "C");
-		assertEquals(9, pathDTOResponse.getDistance());
+		assertEquals(9, pathDTOResponse.getDistance().intValue());
 		assertEquals(Arrays.asList("A", "B", "C"), pathDTOResponse.getPath());
 	}
 	@Test
 	@DisplayName(value = "Test method getMinimalPath where path B to B")
 	void getMinimalPathCtoC() {		
 		PathDTO pathDTOResponse = distanceService.getMinimalPath(graphDTO, "B", "B");
-		assertEquals(0, pathDTOResponse.getDistance());
+		assertEquals(0, pathDTOResponse.getDistance().intValue());
 		assertEquals(Arrays.asList("B"), pathDTOResponse.getPath());
 	}
 	private String graphJson = "{\n" + "	\"data\": [\n" + "		{\n" + "			\"source\": \"A\",\n"

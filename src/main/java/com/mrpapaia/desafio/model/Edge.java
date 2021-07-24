@@ -10,27 +10,25 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-
-
 @Entity
 @Table(name = "tb_edge")
 public class Edge {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long key;	
-	@OneToOne	
+	private Long key;
+	@OneToOne
 	private Vertex source;
-	@OneToOne	
+	@OneToOne
 	private Vertex target;
 	@Column(name = "distance")
 	private Integer distance;
 
 	public Edge() {
-		
+
 	}
 
 	public Edge(Vertex source, Vertex target, Integer distance) {
-		
+
 		this.source = source;
 		this.target = target;
 		this.distance = distance;
@@ -67,8 +65,6 @@ public class Edge {
 	public void setDistance(Integer distance) {
 		this.distance = distance;
 	}
-	
-	
 
 	@Override
 	public String toString() {

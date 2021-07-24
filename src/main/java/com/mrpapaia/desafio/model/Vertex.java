@@ -16,25 +16,24 @@ import javax.persistence.Table;
 
 import org.springframework.lang.Nullable;
 
-
 @Entity
-@Table(name="tb_vertex")
+@Table(name = "tb_vertex")
 public class Vertex implements Cloneable {
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long key;
 	@Column(name = "name")
 	private String name;
-	
-	@OneToMany(cascade=CascadeType.PERSIST)
-    @Nullable
+
+	@OneToMany(cascade = CascadeType.PERSIST)
+	@Nullable
 	private List<Edge> listInputEdge;
-	@OneToMany(cascade=CascadeType.PERSIST)
-    @Nullable
+	@OneToMany(cascade = CascadeType.PERSIST)
+	@Nullable
 	private List<Edge> listOutputEdge;
 
 	public Vertex() {
-		
+
 	}
 
 	public Vertex(String name) {
@@ -85,7 +84,7 @@ public class Vertex implements Cloneable {
 
 	@Override
 	public String toString() {
-		return  name + "";
+		return name + "";
 	}
 
 	@Override
@@ -130,7 +129,5 @@ public class Vertex implements Cloneable {
 			return false;
 		return true;
 	}
-	
-	
 
 }
